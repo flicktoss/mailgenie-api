@@ -1,18 +1,14 @@
-# Step 1: Build stage with Java 24
-FROM eclipse-temurin:24-jdk AS build
+# Step 1: Build stage with Java 21
+FROM eclipse-temurin:21-jdk AS build
 
 WORKDIR /app
 COPY . /app
 
-# Make mvnw executable
 RUN chmod +x ./mvnw
-
-# Build your Spring Boot app
 RUN ./mvnw clean package -DskipTests
 
-# Step 2: Runtime stage with Java 24
-FROM eclipse-temurin:24-jdk
-
+# Step 2: Runtime stage
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
