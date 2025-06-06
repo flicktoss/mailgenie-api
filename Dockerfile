@@ -4,6 +4,9 @@ FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . /app
 
+# ✅ Add permission fix for mvnw
+RUN chmod +x ./mvnw
+
 # Build the project and skip tests
 RUN ./mvnw clean package -DskipTests
 
